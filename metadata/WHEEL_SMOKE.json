@@ -1,0 +1,7 @@
+{
+  "wheel": "pcpi_candidate_certification-1.1.0-py3-none-any.whl",
+  "wheel_bytes": 32145,
+  "install_return_code": 0,
+  "smoke_return_code": 0,
+  "smoke_output": "{\"global_delta_pac\": false, \"version\": \"1.1.0\"}"
+}

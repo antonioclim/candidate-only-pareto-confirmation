@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PCPI paired candidate certificate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "semantic_core",
+    "semantic_sha256",
+    "execution_metadata"
+  ],
+  "properties": {
+    "semantic_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "execution_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generator",
+        "generator_version"
+      ],
+      "properties": {
+        "generator": {
+          "const": "pcpi-candidate-certification"
+        },
+        "generator_version": {
+          "const": "1.1.0"
+        }
+      }
+    },
+    "semantic_core": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "specification",
+        "claim",
+        "stopping_rule",
+        "sufficient_statistics",
+        "certificate",
+        "raw_evidence"
+      ],
+      "properties": {
+        "specification": {
+          "const": "pcpi-paired-candidate-certificate/0.6"
+        },
+        "claim": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "candidate_id",
+            "challenger_ids",
+            "objective_names",
+            "orientation",
+            "delta",
+            "model"
+          ],
+          "properties": {
+            "type": {
+              "const": "candidateStrictlyParetoNondominatedInMean"
+            },
+            "candidate_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "challenger_ids": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "objective_names": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "orientation": {
+              "const": "minimise"
+            },
+            "delta": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "exclusiveMaximum": 1
+            },
+            "model": {
+              "const": "iidPairedMultivariateNormalUnknownPositiveDefiniteCovariance"
+            }
+          }
+        },
+        "stopping_rule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "spending",
+            "hybrid_hotelling_share"
+          ],
+          "properties": {
+            "method": {
+              "enum": [
+                "hotelling",
+                "coordinate",
+                "hybrid"
+              ]
+            },
+            "spending": {
+              "const": "log_telescoping"
+            },
+            "hybrid_hotelling_share": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "exclusiveMaximum": 1
+            }
+          }
+        },
+        "sufficient_statistics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "count",
+            "means",
+            "covariances"
+          ],
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "means": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "number"
+                }
+              }
+            },
+            "covariances": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "certificate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verdict",
+            "crossed",
+            "hotelling_distances",
+            "hotelling_thresholds",
+            "coordinate_t_max",
+            "coordinate_thresholds",
+            "witness_objective_indices",
+            "covariance_ranks"
+          ],
+          "properties": {
+            "verdict": {
+              "enum": [
+                "certified",
+                "notCertified"
+              ]
+            },
+            "crossed": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "boolean"
+              }
+            },
+            "hotelling_distances": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "hotelling_thresholds": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "coordinate_t_max": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "number"
+              }
+            },
+            "coordinate_thresholds": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "witness_objective_indices": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "covariance_ranks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "raw_evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "media_type",
+            "sha256",
+            "relative_path"
+          ],
+          "properties": {
+            "media_type": {
+              "const": "text/csv"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "relative_path": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

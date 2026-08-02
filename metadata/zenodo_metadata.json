@@ -1,0 +1,31 @@
+{
+  "title": "One-Sided Candidate-Only Pareto Confirmation for Stochastic Simulation — Software and Research Package v1.1.0",
+  "upload_type": "software",
+  "description": "Software, data, tests and replayable statistical evidence for one-sided archive-relative Pareto confirmation in stochastic simulation. The procedure may certify a positive claim or remain undecided; it is not a total fixed-confidence identification algorithm.",
+  "creators": [
+    {
+      "name": "Clim, Antonio",
+      "orcid": "0000-0003-4745-0431",
+      "affiliation": "Bucharest University of Economic Studies"
+    }
+  ],
+  "license": "BSD-3-Clause",
+  "version": "1.1.0",
+  "publication_date": "2026-07-29",
+  "keywords": [
+    "simulation validation",
+    "Pareto confirmation",
+    "sequential testing",
+    "adaptive simulation",
+    "correlated outputs",
+    "reproducibility"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/antonioclim/candidate-only-pareto-confirmation/releases/tag/v1.1.0",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ],
+  "notes": "The four-season application data are a derived public-mirror subset with machine-readable provenance. The DOI is assigned only when this new software record is published."
+}

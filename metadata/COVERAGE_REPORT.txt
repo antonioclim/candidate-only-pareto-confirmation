@@ -1,0 +1,21 @@
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+src/pcpi_candidate_tas/__init__.py                5      0   100%
+src/pcpi_candidate_tas/battery.py                83      0   100%
+src/pcpi_candidate_tas/boundaries.py            132      8    94%   92, 120, 123, 127-129, 144, 186
+src/pcpi_candidate_tas/candidate.py             131      6    95%   14, 146-148, 176-182
+src/pcpi_candidate_tas/cli.py                    11      1    91%   11
+src/pcpi_candidate_tas/full_psi.py               75      5    93%   123, 138-143
+src/pcpi_candidate_tas/imoscore.py              191     21    89%   52, 54, 56, 58, 77, 81, 85, 127, 139, 157, 176, 242, 262, 265, 270, 282, 289, 299, 325, 358, 360
+src/pcpi_candidate_tas/information.py            28      0   100%
+src/pcpi_candidate_tas/models.py                 84      0   100%
+src/pcpi_candidate_tas/multiseason.py            56      2    96%   29, 31
+src/pcpi_candidate_tas/official_repo_tns.py      25      4    84%   23-25, 31
+src/pcpi_candidate_tas/opsd_full.py              17      0   100%
+src/pcpi_candidate_tas/oracle.py                 63      4    94%   53-56
+src/pcpi_candidate_tas/paired.py                115      4    97%   58, 91-92, 170
+src/pcpi_candidate_tas/paired_artifacts.py       64      1    98%   77
+src/pcpi_candidate_tas/psi_comparators.py        73      4    95%   51-52, 83-84
+src/pcpi_candidate_tas/theory_status.py          26      0   100%
+---------------------------------------------------------------------------
+TOTAL                                          1179     60    95%
