@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pcpi-candidate-certification"
+version = "1.1.0"
+description = "One-sided candidate-only Pareto confirmation and replayable statistical evidence for stochastic simulation"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "scipy>=1.10", "jsonschema>=4.18"]
+license = {text = "BSD-3-Clause"}
+authors = [{name = "Antonio Clim"}]
+keywords = ["simulation", "Pareto", "ranking and selection", "sequential testing", "reproducibility"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "coverage>=7"]
+
+[project.scripts]
+pcpi-candidate-certification = "pcpi_candidate_tas.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = false
+source = ["pcpi_candidate_tas"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
