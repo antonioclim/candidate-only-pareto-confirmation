@@ -1,7 +1,7 @@
 # Release notes v1.1.0
 
 Initial public release of the corrected one-sided candidate-only confirmation
-software and research package.
+software and reproducibility core.
 
 ## Scientific corrections incorporated before release
 
@@ -25,4 +25,5 @@ software and research package.
 - standalone independent verifier;
 - deterministic manifests and release bundles.
 
-No DOI is asserted until the Zenodo record is actually published.
+The unpublished manuscript and supplementary manuscript are intentionally not
+included. No DOI is asserted until the Zenodo software record is published.

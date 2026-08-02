@@ -1,7 +1,7 @@
 {
-  "title": "One-Sided Candidate-Only Pareto Confirmation for Stochastic Simulation — Software and Research Package v1.1.0",
+  "title": "One-Sided Candidate-Only Pareto Confirmation — Software and Reproducibility Core v1.1.0",
   "upload_type": "software",
-  "description": "Software, data, tests and replayable statistical evidence for one-sided archive-relative Pareto confirmation in stochastic simulation. The procedure may certify a positive claim or remain undecided; it is not a total fixed-confidence identification algorithm.",
+  "description": "Software, tests, schemas, minimal example data and replayable statistical evidence for one-sided archive-relative Pareto confirmation in stochastic simulation. The unpublished manuscript and supplementary manuscript are not included. The procedure may certify a positive claim or remain undecided; it is not a total fixed-confidence identification algorithm.",
   "creators": [
     {
       "name": "Clim, Antonio",
@@ -11,7 +11,7 @@
   ],
   "license": "BSD-3-Clause",
   "version": "1.1.0",
-  "publication_date": "2026-07-29",
+  "publication_date": "2026-08-02",
   "keywords": [
     "simulation validation",
     "Pareto confirmation",
@@ -27,5 +27,5 @@
       "scheme": "url"
     }
   ],
-  "notes": "The four-season application data are a derived public-mirror subset with machine-readable provenance. The DOI is assigned only when this new software record is published."
+  "notes": "Software-only public record. The unpublished manuscript and supplementary manuscript are not included. The included derived data have machine-readable provenance. The DOI is assigned only when this new software record is published."
 }

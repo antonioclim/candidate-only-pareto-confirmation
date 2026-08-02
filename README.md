@@ -3,24 +3,28 @@
 [![Software version](https://img.shields.io/badge/version-1.1.0-blue.svg)](RELEASE_NOTES_v1.1.0.md)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-green.svg)](LICENSE)
 
-This repository implements and evaluates a one-sided procedure for confirming
-that one externally selected candidate is Pareto-nondominated in mean relative
-to one fixed finite archive. The procedure may issue a positive archive-relative
-certificate or remain undecided. It is not a total fixed-confidence
-identification algorithm, and non-certification is not a domination verdict.
+This repository contains the software and reproducibility core for a one-sided
+procedure that may confirm that one externally selected candidate is
+Pareto-nondominated in mean relative to one fixed finite archive. The procedure
+may issue a positive archive-relative certificate or remain undecided. It is not
+a total fixed-confidence identification algorithm, and non-certification is not
+a domination verdict.
 
-## Scientific scope
+## Public repository scope
 
-The release contains:
+The repository contains only the software and reproducibility core:
 
-- the candidate-specific Gaussian dominance-cone information projection;
-- a scalar allocation specialisation built on established equalisation and
-  inverse-root machinery;
-- theorem-aligned unit-pull tracking and a separate batched engineering policy;
-- cone, coordinate, hybrid and paired Hotelling evidence procedures;
-- a raw-data-bound certificate and an independent standalone verifier;
-- powered application, robustness and tracking evidence;
-- manuscript and supplementary sources.
+- Python source code and command-line interface;
+- automated tests, coverage records and deterministic mutation probes;
+- strict JSON Schema and example raw-bound evidence artefacts;
+- standalone certificate verifier;
+- reproducibility scripts and minimal derived data with machine-readable
+  provenance;
+- build, container, SBOM and continuous-integration configuration.
+
+The unpublished manuscript, supplementary manuscript, submission documents and
+article PDFs are intentionally **not included** in this repository or in the
+associated Zenodo software record.
 
 ## Explicit non-claims
 
@@ -50,28 +54,30 @@ python tools/verify_paired_certificate_standalone.py \
   --schema schemas/pcpi_paired_candidate_certificate.schema.json
 ```
 
-The current release reports 50 passing tests, 95% statement coverage, 9/9
+The v1.1.0 core reports 50 passing tests, 95% statement coverage, 9/9
 mutation probes killed and 14/14 artefact conformance cases.
 
-## Reproducing the reported studies
+## Reproducibility resources
 
-The deterministic experiment drivers are under `scripts/`. Aggregated evidence
-is stored under `evidence/`; source data and machine-readable provenance are
-under `data/`.
+Deterministic experiment drivers are under `scripts/`. Minimal example evidence
+is stored under `evidence/artefact/`; source data and machine-readable
+provenance are under `data/`. Larger unpublished study outputs are not required
+for installing or testing the software core and are not included here.
 
 ## Citation and persistent identifier
 
-See `CITATION.cff`. The Zenodo DOI should be added after the record is actually
-published; no placeholder DOI is asserted in this release bundle.
+See `CITATION.cff`. The Zenodo DOI must be added only after the software record
+is actually published; no placeholder DOI is asserted.
 
 ## Data provenance
 
-The seasonal application data are a derived public-mirror subset with pinned
+The included seasonal data are a derived public-mirror subset with pinned
 repository commit, upstream blob identifiers, source line ranges, merge rules
 and SHA-256 recorded in `data/multiseason/MULTISEASON_PROVENANCE.json`. They are
 not the complete official OPSD package.
 
 ## Licence
 
-Software is released under the BSD 3-Clause licence. Manuscript and
-supplementary text are supplied for scholarly review and citation.
+Software source code is released under the BSD 3-Clause licence. Textual
+documentation and non-code metadata are licensed under CC BY 4.0 unless a file
+states otherwise.
