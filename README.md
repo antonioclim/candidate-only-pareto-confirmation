@@ -2,6 +2,7 @@
 
 [![Software version](https://img.shields.io/badge/version-1.1.0-blue.svg)](RELEASE_NOTES_v1.1.0.md)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-green.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21762634.svg)](https://doi.org/10.5281/zenodo.21762634)
 
 This repository contains the software and reproducibility core for a one-sided
 procedure that may confirm that one externally selected candidate is
@@ -66,8 +67,12 @@ for installing or testing the software core and are not included here.
 
 ## Citation and persistent identifier
 
-See `CITATION.cff`. The Zenodo DOI must be added only after the software record
-is actually published; no placeholder DOI is asserted.
+Archived software core v1.1.0: [10.5281/zenodo.21762634](https://doi.org/10.5281/zenodo.21762634).
+
+See `CITATION.cff` for machine-readable citation metadata. The DOI was assigned
+after the `v1.1.0` tag and binary assets were published; the tag and release
+assets remain unchanged, while this default-branch metadata update records the
+persistent identifier.
 
 ## Data provenance
 

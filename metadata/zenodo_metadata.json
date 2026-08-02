@@ -27,5 +27,6 @@
       "scheme": "url"
     }
   ],
-  "notes": "Software-only public record. The unpublished manuscript and supplementary manuscript are not included. The included derived data have machine-readable provenance. The DOI is assigned only when this new software record is published."
+  "notes": "Published software-only record. The unpublished manuscript and supplementary manuscript are not included. The included derived data have machine-readable provenance. Version-specific DOI: 10.5281/zenodo.21762634.",
+  "doi": "10.5281/zenodo.21762634"
 }

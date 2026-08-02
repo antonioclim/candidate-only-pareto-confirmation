@@ -3,13 +3,13 @@ path,size_bytes,extension,category
 .gitignore,115,,root
 ARTEFACT_SPECIFICATION.md,480,.md,root
 Apptainer.def,266,.def,root
-CITATION.cff,776,.cff,root
+CITATION.cff,842,.cff,root
 CONTRIBUTING.md,131,.md,root
 DOCUMENTATION_LICENSE_CC_BY_4.0.txt,302,.txt,root
 Dockerfile,300,,root
 LICENSE,1152,,root
-README.md,3226,.md,root
-RELEASE_NOTES_v1.1.0.md,1052,.md,root
+README.md,3558,.md,root
+RELEASE_NOTES_v1.1.0.md,1216,.md,root
 REPRODUCIBILITY.md,1253,.md,root
 SECURITY.md,126,.md,root
 data/multiseason/MULTISEASON_PROVENANCE.json,2446,.json,data
@@ -28,7 +28,7 @@ metadata/SBOM.cdx.json,1220,.json,metadata
 metadata/STANDALONE_VERIFIER.txt,119,.txt,metadata
 metadata/TEST_LOG.txt,99,.txt,metadata
 metadata/WHEEL_SMOKE.json,222,.json,metadata
-metadata/zenodo_metadata.json,1402,.json,metadata
+metadata/zenodo_metadata.json,1419,.json,metadata
 pyproject.toml,985,.toml,root
 requirements-lock.txt,96,.txt,root
 schemas/pcpi_paired_candidate_certificate.schema.json,6910,.json,schemas

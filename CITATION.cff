@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Please cite the archived public release. Add the Zenodo DOI after publication."
+message: "If you use this software, please cite the archived v1.1.0 release."
 type: software
 title: "One-Sided Candidate-Only Pareto Confirmation — Software Core"
 authors:
@@ -7,12 +7,14 @@ authors:
     given-names: Antonio
     orcid: "https://orcid.org/0000-0003-4745-0431"
 version: "1.1.0"
+doi: "10.5281/zenodo.21762634"
 date-released: "2026-08-02"
 license: "BSD-3-Clause"
+url: "https://doi.org/10.5281/zenodo.21762634"
+repository-code: "https://github.com/antonioclim/candidate-only-pareto-confirmation"
 abstract: >-
   Software, tests, minimal example data and replayable statistical evidence for one-sided
   archive-relative Pareto confirmation in stochastic simulation.
-repository-code: "https://github.com/antonioclim/candidate-only-pareto-confirmation"
 keywords:
   - simulation validation
   - Pareto confirmation
