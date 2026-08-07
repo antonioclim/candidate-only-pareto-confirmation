@@ -3,11 +3,9 @@ from __future__ import annotations
 
 import csv
 import hashlib
-import io
 import json
 import re
 import subprocess
-import tarfile
 from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -109,33 +107,67 @@ def _load_checksums() -> tuple[dict[str, str], list[str]]:
     return records, errors
 
 
-def _git_archive_records() -> dict[str, tuple[int, str]] | None:
-    """Return canonical committed bytes, independent of checkout line endings."""
+def _git_blob_records() -> dict[str, tuple[int, str]] | None:
+    """Return raw committed blob bytes without checkout or archive conversions."""
     try:
-        completed = subprocess.run(
-            ["git", "-C", str(ROOT), "archive", "--format=tar", "HEAD"],
+        listing = subprocess.run(
+            ["git", "-C", str(ROOT), "ls-tree", "-r", "-z", "--full-tree", "HEAD"],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL,
-        )
+        ).stdout
     except (FileNotFoundError, subprocess.CalledProcessError):
         return None
 
+    entries: list[tuple[str, str]] = []
+    for record in listing.split(b"\0"):
+        if not record:
+            continue
+        metadata, path_bytes = record.split(b"\t", 1)
+        _mode, object_type, object_sha = metadata.split()
+        if object_type != b"blob":
+            continue
+        entries.append((path_bytes.decode("utf-8"), object_sha.decode("ascii")))
+
+    try:
+        process = subprocess.Popen(
+            ["git", "-C", str(ROOT), "cat-file", "--batch"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+        )
+    except FileNotFoundError:
+        return None
+
+    assert process.stdin is not None
+    assert process.stdout is not None
+    for _relative, object_sha in entries:
+        process.stdin.write(object_sha.encode("ascii") + b"\n")
+    process.stdin.close()
+
     records: dict[str, tuple[int, str]] = {}
-    with tarfile.open(fileobj=io.BytesIO(completed.stdout), mode="r:") as archive:
-        for member in archive:
-            if not member.isfile():
-                continue
-            extracted = archive.extractfile(member)
-            if extracted is None:
-                continue
-            digest = hashlib.sha256()
-            size = 0
-            for block in iter(lambda: extracted.read(1 << 20), b""):
-                size += len(block)
-                digest.update(block)
-            records[member.name] = (size, digest.hexdigest())
-    return records
+    try:
+        for relative, expected_sha in entries:
+            header = process.stdout.readline().rstrip(b"\n")
+            parts = header.split()
+            if len(parts) != 3:
+                process.kill()
+                return None
+            actual_sha, object_type, size_text = parts
+            if actual_sha.decode("ascii") != expected_sha or object_type != b"blob":
+                process.kill()
+                return None
+            size = int(size_text)
+            data = process.stdout.read(size)
+            separator = process.stdout.read(1)
+            if len(data) != size or separator != b"\n":
+                process.kill()
+                return None
+            records[relative] = (size, hashlib.sha256(data).hexdigest())
+    finally:
+        return_code = process.wait()
+
+    return records if return_code == 0 else None
 
 
 def _filesystem_record(relative: str) -> tuple[int, str] | None:
@@ -157,8 +189,8 @@ def _verify_manifests() -> dict[str, object]:
     for relative in sorted(checksum_paths - inventory_paths):
         errors.append(f"missing from FILE_INVENTORY.csv: {relative}")
 
-    canonical = _git_archive_records()
-    source = "git_archive" if canonical is not None else "filesystem"
+    canonical = _git_blob_records()
+    source = "git_raw_blobs" if canonical is not None else "filesystem"
     if canonical is not None:
         expected_tracked = inventory_paths | ROOT_MANIFESTS
         canonical_paths = set(canonical)

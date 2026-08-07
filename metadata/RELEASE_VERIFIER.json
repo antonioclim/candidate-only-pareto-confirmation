@@ -2,7 +2,7 @@
   "manifests": {
     "inventory_records": 602,
     "checksum_records": 602,
-    "verification_source": "canonical committed tree or archive filesystem",
+    "verification_source": "raw committed Git blobs via ls-tree and cat-file, with filesystem fallback outside Git",
     "errors": [],
     "valid": true
   },
