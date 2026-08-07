@@ -1,0 +1,38 @@
+{
+  "title": "One-Sided Candidate-Only Pareto Confirmation — Software and Reproducibility Core",
+  "upload_type": "software",
+  "description": "Version 1.2.0 of the software and reproducibility core supporting one-sided candidate-only confirmation of strict positive-witness archive separation for one externally selected candidate relative to a fixed finite archive in stochastic simulation. The release provides independent and common-scenario procedures, coordinate, Hotelling and hybrid evidence, count-indexed spending, replayable certificate artefacts, deterministic synthetic fixtures, tests and machine-readable applicability boundaries. The release also includes source-based figure generation using PlantUML semantic sources, Python quantitative scripts and normalised OOXML exact-layout packages. It does not recover a full Pareto front, does not certify equality-boundary ordinary nondominance and makes no claim of distribution-free, temporal-dependence or expected-time optimality. The unpublished manuscript, supplement and upstream observation rows are excluded.",
+  "creators": [
+    {
+      "name": "Clim, Antonio",
+      "orcid": "0000-0003-4745-0431",
+      "affiliation": "Bucharest University of Economic Studies"
+    }
+  ],
+  "version": "1.2.0",
+  "access_right": "open",
+  "license": "BSD-3-Clause",
+  "language": "eng",
+  "keywords": [
+    "stochastic simulation",
+    "Pareto confirmation",
+    "sequential testing",
+    "ranking and selection",
+    "common random numbers",
+    "reproducible evidence"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.21762634",
+      "relation": "isNewVersionOf",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "10.5281/zenodo.21802337",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset"
+    }
+  ],
+  "notes": "Manual controlled deposit. GitHub–Zenodo integration is not used for this version. Figure sources are included; the manuscript and supplement remain excluded.",
+  "doi": "10.5281/zenodo.21801863"
+}
