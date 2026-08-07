@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install package and test dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev]"
+      - name: Run tests with coverage
+        run: python -m coverage run -m pytest -q
+      - name: Enforce coverage threshold
+        run: python -m coverage report --fail-under=95
+      - name: Run deterministic mutation probes
+        run: python tools/manual_mutation_suite.py
+      - name: Replay example certificate
+        run: >-
+          python tools/verify_paired_certificate_standalone.py
+          --artifact evidence/examples/example_certificate.json
+          --raw evidence/examples/example_raw.csv
+          --schema schemas/pcpi_paired_candidate_certificate.schema.json
+      - name: Run accelerated/reference equivalence checks
+        run: python scripts/verify_accelerated_equivalence.py
+      - name: Verify release policy
+        run: python scripts/verify_release.py
+      - name: Build wheel
+        run: python -m pip wheel . --no-deps -w dist
+
+  figures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install figure-generation dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r figures/requirements-figures-lock.txt
+      - name: Build quantitative figure demos
+        run: python figures/build/build_quantitative.py
+      - name: Validate figure sources and evidence anchors
+        run: python figures/build/validate.py
