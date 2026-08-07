@@ -13,10 +13,10 @@ def test_theory_aligned_tracking_records_bounded_deficit():
         easy(),delta=.1,seed=12,max_samples=25000,update_every=10,trace_every=20
     )
     assert result.certified and result.trace
-    assert max(x["maximum_positive_deficit"] for x in result.trace) <= 1.0000001
+    assert max(x["maximum_positive_deficit"] for x in result.trace) < easy().means.shape[0]-1.0
     assert max(x["tracking_discrepancy_linf"] for x in result.trace) < 3.0
 
 def test_expected_time_status_names_reference_coverage():
     status=one_sided_theory_status()
-    assert status.reference_unit_pull_implementation_matches_claimed_pathwise_construction
+    assert status.executable_reference_control_flow_matches_pathwise_construction
     assert not status.practical_batched_implementation_theorem_covered

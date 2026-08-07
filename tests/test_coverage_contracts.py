@@ -57,7 +57,7 @@ def test_information_geometry_contracts():
 
 def test_model_validation_and_properties():
     x=easy_instance()
-    assert x.n_challengers==2 and x.n_objectives==2 and x.strictly_nondominated_candidate
+    assert x.n_challengers==2 and x.n_objectives==2 and x.strict_positive_witness_candidate and x.strictly_nondominated_candidate
     assert x.gaps.shape==(2,2)
     for means,var,ids,names in [
         ([[0,0]],[[1,1]],('a',),('x','y')),
@@ -109,8 +109,10 @@ def test_candidate_policy_branches_and_caps(monkeypatch):
     assert not capped.certified
     import pcpi_candidate_tas.candidate as module
     monkeypatch.setattr(module,'solve_scalar_allocation',lambda *a,**k: (_ for _ in ()).throw(RuntimeError('x')))
-    failed=run_theory_aligned_c_tracking(instance,delta=.1,seed=1,max_samples=20,update_every=1,trace_every=1)
-    assert failed.oracle_failures>0
+    with pytest.raises(RuntimeError):
+        run_theory_aligned_c_tracking(instance,delta=.1,seed=1,max_samples=20,update_every=1,trace_every=1)
+    fallback=run_theory_aligned_c_tracking(instance,delta=.1,seed=1,max_samples=20,update_every=1,trace_every=1,fail_on_oracle_error=False)
+    assert fallback.oracle_failures>0
 
 
 def test_paired_validation_sequential_and_singular_cases():
@@ -158,7 +160,7 @@ def test_psi_comparator_paths():
 def test_multiseason_error_contracts(tmp_path):
     bad=tmp_path/'bad.csv';bad.write_text('a,b\n1,2\n')
     with pytest.raises(ValueError): load_multiseason_subset(bad)
-    data=load_multiseason_subset(Path(__file__).parents[1]/'data/multiseason/dk1_2019_multiseason_mirror_subset.csv')
+    data=load_multiseason_subset(Path(__file__).parents[1]/'data/synthetic_multiseason/synthetic_multiseason_fixture.csv')
     with pytest.raises(ValueError): seasonal_windows(data,'development',1)
     with pytest.raises(ValueError): seasonal_windows(data,'missing',24)
     with pytest.raises(ValueError): generate_multiseason_scenarios(data,'confirmation',0,1)

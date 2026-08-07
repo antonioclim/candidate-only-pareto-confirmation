@@ -1,0 +1,7 @@
+{
+  "name": "@mermaid-js/mermaid-cli",
+  "version": "11.16.0",
+  "bundled": false,
+  "required": false,
+  "purpose": "optional documentation mirror only; not the exact editorial renderer"
+}

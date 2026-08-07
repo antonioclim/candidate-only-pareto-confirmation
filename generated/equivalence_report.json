@@ -1,0 +1,10 @@
+{
+  "specification": "pcpi-reference-equivalence/1.0",
+  "application_cases": 9,
+  "application_mismatches": 0,
+  "calibration_cases": 36,
+  "calibration_mismatches": 0,
+  "maximum_application_absolute_difference": 3.637978807091713e-12,
+  "maximum_application_relative_difference": 5.011697731985533e-16,
+  "all_gates_passed": true
+}

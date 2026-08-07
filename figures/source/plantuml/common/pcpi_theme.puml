@@ -1,0 +1,22 @@
+
+' Common visual theme for PCPI / SIMPAT conceptual figures
+skinparam BackgroundColor white
+skinparam Shadowing false
+skinparam dpi 300
+skinparam DefaultFontName DejaVu Sans
+skinparam DefaultFontSize 15
+skinparam ArrowColor #1F3A5F
+skinparam ArrowThickness 2
+skinparam packageStyle rectangle
+skinparam Rectangle {
+  RoundCorner 12
+  BorderColor #1F3A5F
+  FontColor #111111
+  FontStyle plain
+  BackgroundColor #F7FBFF
+}
+skinparam Note {
+  BorderColor #6B7A90
+  FontColor #111111
+  BackgroundColor #FFFCE6
+}

@@ -1,0 +1,16 @@
+{
+  "kit_version": "1.0.0",
+  "validation": {
+    "valid": true,
+    "failures": [],
+    "figures": 10
+  },
+  "ooxml_rebuild_pixel_identical_count": 10,
+  "ooxml_rebuild_figure_count": 10,
+  "plantuml_version_lock": "1.2026.6",
+  "plantuml_jar_bundled": false,
+  "software_tests_passed": 131,
+  "coverage_total_percent": 95,
+  "integrated_release_verifier_valid": true,
+  "ci_figure_job_added": true
+}

@@ -1,0 +1,12 @@
+{
+  "scenarios": 32,
+  "policy_count": 13,
+  "candidate_policy_id": "policy_00_idle",
+  "seasons": [
+    "autumn",
+    "spring",
+    "summer",
+    "winter"
+  ],
+  "finite": true
+}

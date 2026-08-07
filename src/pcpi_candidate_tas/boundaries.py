@@ -245,13 +245,15 @@ def evaluate_boundary(
     if method == "laurent_massart":
         threshold = laurent_massart_glr_threshold(alpha, dimension)
         return BoundaryDecision(
-            cone_glr >= threshold, cone_glr, threshold, max_z, None,
+            cone_glr > threshold, cone_glr, threshold, max_z, None,
             witness, alpha, method, spending
         )
     if method == "chi_bar":
         threshold = chi_bar_glr_threshold(alpha, dimension)
+        # Strict crossing is essential when the chi-bar quantile is zero,
+        # because the least-favourable law has an atom at zero.
         return BoundaryDecision(
-            cone_glr >= threshold, cone_glr, threshold, max_z, None,
+            cone_glr > threshold, cone_glr, threshold, max_z, None,
             witness, alpha, method, spending
         )
     if method == "coordinate":
@@ -269,7 +271,7 @@ def evaluate_boundary(
         coordinate_threshold = coordinate_z_threshold(
             alpha * (1.0 - hybrid_cone_share), dimension
         )
-        crossed = cone_glr >= cone_threshold or max_z >= coordinate_threshold
+        crossed = cone_glr > cone_threshold or max_z >= coordinate_threshold
         return BoundaryDecision(
             crossed, cone_glr, cone_threshold, max_z, coordinate_threshold,
             witness, alpha, method, spending

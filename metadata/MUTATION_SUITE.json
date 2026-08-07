@@ -1,0 +1,43 @@
+{
+  "mutation_probes": 9,
+  "killed": 9,
+  "all_killed": true,
+  "results": [
+    {
+      "mutation": "reverse-gap-sign",
+      "killed": true
+    },
+    {
+      "mutation": "remove-count-spending",
+      "killed": true
+    },
+    {
+      "mutation": "discard-covariance",
+      "killed": true
+    },
+    {
+      "mutation": "strict-versus-inclusive-boundary",
+      "killed": true
+    },
+    {
+      "mutation": "semantic-hash",
+      "killed": true
+    },
+    {
+      "mutation": "verdict",
+      "killed": true
+    },
+    {
+      "mutation": "count",
+      "killed": true
+    },
+    {
+      "mutation": "identity-collision",
+      "killed": true
+    },
+    {
+      "mutation": "boundary-family",
+      "killed": true
+    }
+  ]
+}

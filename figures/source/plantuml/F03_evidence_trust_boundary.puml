@@ -1,0 +1,33 @@
+
+    @startuml
+    !include common/pcpi_theme.puml
+    title Figure 3. Evidence artefact and bounded trust claim
+    top to bottom direction
+
+    rectangle "TRUST BOUNDARY" as tb #DCEBFA
+
+    rectangle "INSIDE REPLAY" as inside #EEF6EA
+    rectangle "Hashed evidence artefact" as art #F7FBFF
+    rectangle "Independent statistical replay" as replay #EEF6EA
+    rectangle "Counts, raw bounds, stopping state,
+certificate logic" as contents #FFFCE6
+
+    rectangle "OUTSIDE REPLAY" as outside #FFF2F2
+    rectangle "Simulator authenticity" as sim #FFFFFF
+    rectangle "Model validity" as model #FFFFFF
+    rectangle "External application validity" as ext #FFFFFF
+
+    tb --> inside
+    inside --> art
+    art --> replay
+    replay --> contents
+
+    tb --> outside
+    outside --> sim
+    outside --> model
+    outside --> ext
+
+    note bottom
+    The evidence artefact supports independent statistical replay but the trust claim is deliberately bounded.
+    end note
+    @enduml

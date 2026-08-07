@@ -29,7 +29,7 @@ def main():
     # Mutant 4: inclusive boundary at an equality.
     results.append(("strict-versus-inclusive-boundary",not (0.0>0.0) and (0.0>=0.0)))
     # Mutants 5-10: semantic/raw tampering must be rejected by replay.
-    evidence=ROOT/"evidence/artefact";schema=ROOT/"schemas/pcpi_paired_candidate_certificate.schema.json"
+    evidence=ROOT/"evidence/examples";schema=ROOT/"schemas/pcpi_paired_candidate_certificate.schema.json"
     artifact=json.loads((evidence/"example_certificate.json").read_text())
     raw=evidence/"example_raw.csv"
     cases=[]
