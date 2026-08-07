@@ -15,39 +15,52 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _relative_posix(path: Path) -> str:
+    """Return a repository-relative POSIX path on every operating system."""
+    return path.relative_to(ROOT).as_posix()
+
+
 def main() -> None:
     prohibited_names = re.compile(
         r"(manu" r"script|supple" r"ment|submis" r"sion|mirror_" r"subset)",
         re.IGNORECASE,
     )
     prohibited_paths = [
-        path.relative_to(ROOT).as_posix()
+        _relative_posix(path)
         for path in ROOT.rglob("*")
         if path.is_file() and prohibited_names.search(path.name)
     ]
-    source_rows = [
-        path.relative_to(ROOT).as_posix()
-        for path in ROOT.rglob("*.csv")
-        if path.name not in {"FILE_INVENTORY.csv"}
-        and "synthetic" not in path.as_posix()
-        and not path.as_posix().startswith(str(ROOT / "evidence"))
-        and not path.as_posix().startswith(str(ROOT / "config"))
-        and not path.as_posix().startswith(str(ROOT / "figures" / "data" / "evidence_extracts"))
-        and not path.as_posix().startswith(str(ROOT / "figures" / "qa"))
-    ]
+
+    source_rows = []
+    for path in ROOT.rglob("*.csv"):
+        relative = _relative_posix(path)
+        if path.name == "FILE_INVENTORY.csv":
+            continue
+        if "synthetic" in relative:
+            continue
+        if relative.startswith("evidence/"):
+            continue
+        if relative.startswith("config/"):
+            continue
+        if relative.startswith("figures/data/evidence_extracts/"):
+            continue
+        if relative.startswith("figures/qa/"):
+            continue
+        source_rows.append(relative)
 
     allowed_figure_data = {
         "application_primary_raw.csv",
         "application_primary_candidate_distribution.csv",
     }
     figure_data_csv = {
-        path.name for path in (ROOT / "figures" / "data" / "evidence_extracts").glob("*.csv")
+        path.name
+        for path in (ROOT / "figures" / "data" / "evidence_extracts").glob("*.csv")
     }
     unexpected_figure_data = sorted(figure_data_csv - allowed_figure_data)
 
     report = {
-        "prohibited_paths": prohibited_paths,
-        "unexpected_data_csv": source_rows,
+        "prohibited_paths": sorted(prohibited_paths),
+        "unexpected_data_csv": sorted(source_rows),
         "unexpected_figure_data_csv": unexpected_figure_data,
         "valid": not prohibited_paths and not source_rows and not unexpected_figure_data,
     }
