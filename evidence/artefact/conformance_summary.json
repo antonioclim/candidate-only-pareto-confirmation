@@ -1,6 +1,0 @@
-{
-  "cases": 14,
-  "passed": 14,
-  "all_passed": true,
-  "trust_boundary": "Replay establishes consistency with hashed raw paired observations and the declared iid multivariate-normal unknown-covariance model. It does not authenticate the external simulator or validate normality."
-}
