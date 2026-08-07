@@ -1,6 +1,16 @@
 {
-  "prohibited_paths": [],
-  "unexpected_data_csv": [],
-  "unexpected_figure_data_csv": [],
+  "manifests": {
+    "inventory_records": 602,
+    "checksum_records": 602,
+    "verification_source": "canonical committed tree or archive filesystem",
+    "errors": [],
+    "valid": true
+  },
+  "policy": {
+    "prohibited_paths": [],
+    "unexpected_data_csv": [],
+    "unexpected_figure_data_csv": [],
+    "valid": true
+  },
   "valid": true
 }
