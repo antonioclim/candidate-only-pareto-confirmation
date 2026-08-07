@@ -1,24 +1,29 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite the archived v1.1.0 release."
+message: Please cite the published Zenodo record for version 1.2.0 of this software.
 type: software
-title: "One-Sided Candidate-Only Pareto Confirmation — Software Core"
+title: One-Sided Candidate-Only Pareto Confirmation — Software and Reproducibility Core
 authors:
-  - family-names: Clim
-    given-names: Antonio
-    orcid: "https://orcid.org/0000-0003-4745-0431"
-version: "1.1.0"
-doi: "10.5281/zenodo.21762634"
-date-released: "2026-08-02"
-license: "BSD-3-Clause"
-url: "https://doi.org/10.5281/zenodo.21762634"
-repository-code: "https://github.com/antonioclim/candidate-only-pareto-confirmation"
-abstract: >-
-  Software, tests, minimal example data and replayable statistical evidence for one-sided
-  archive-relative Pareto confirmation in stochastic simulation.
+- family-names: Clim
+  given-names: Antonio
+  affiliation: Department of Economic Informatics and Cybernetics, Faculty of Cybernetics, Statistics and Economic Informatics, Bucharest University of Economic Studies, 15-17 Calea Dorobanti, Sector 1, 010552 Bucharest, Romania
+  orcid: https://orcid.org/0000-0003-4745-0431
+version: 1.2.0
+license: BSD-3-Clause
+repository-code: https://github.com/antonioclim/candidate-only-pareto-confirmation
+abstract: Software, tests, deterministic synthetic fixtures and replayable statistical evidence for one-sided confirmation of strict positive-witness archive separation for one externally selected candidate in stochastic simulation.
 keywords:
-  - simulation validation
-  - Pareto confirmation
-  - sequential testing
-  - adaptive simulation
-  - correlated outputs
-  - reproducibility
+- stochastic simulation
+- Pareto confirmation
+- sequential testing
+- ranking and selection
+- common random numbers
+- reproducible evidence
+identifiers:
+- type: doi
+  value: 10.5281/zenodo.21762634
+  description: Previous public software version 1.1.0.
+doi: 10.5281/zenodo.21801863
+references:
+- type: dataset
+  title: One-Sided Candidate-Only Pareto Confirmation — Research Outputs Dataset
+  doi: 10.5281/zenodo.21802337

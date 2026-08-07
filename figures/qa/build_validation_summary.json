@@ -1,0 +1,9 @@
+{
+  "ooxml_rebuild_figures": 10,
+  "ooxml_preview_pixel_identical": 10,
+  "quantitative_demo_png_count": 6,
+  "quantitative_demo_svg_count": 6,
+  "reference_figures": 10,
+  "plantuml_version_locked": "1.2026.6",
+  "plantuml_jar_bundled": false
+}

@@ -1,0 +1,9 @@
+cell_id,data_generating_mechanism,stress_class,replications,role
+ROB-00,iid Gaussian reference,inside exact model,1000,applicability-boundary diagnostic; no theorem extension
+ROB-01,"multivariate t, df=5",heavy tails,1000,applicability-boundary diagnostic; no theorem extension
+ROB-02,"multivariate t, df=3",severe heavy tails,1000,applicability-boundary diagnostic; no theorem extension
+ROB-03,centred lognormal coordinates,skewness,1000,applicability-boundary diagnostic; no theorem extension
+ROB-04,1% ten-SD contamination,outliers,1000,applicability-boundary diagnostic; no theorem extension
+ROB-05,AR(1) rho=0.3,serial dependence,1000,applicability-boundary diagnostic; no theorem extension
+ROB-06,AR(1) rho=0.6,strong serial dependence,1000,applicability-boundary diagnostic; no theorem extension
+ROB-07,near-singular covariance,rank/numerical stress,1000,applicability-boundary diagnostic; no theorem extension

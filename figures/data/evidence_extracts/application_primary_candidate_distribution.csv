@@ -1,0 +1,6 @@
+candidate_policy_id,count,rate
+candidate_anchor_00,2,0.005
+hard_01,38,0.095
+hard_02,1,0.0025
+hard_03,1,0.0025
+hard_09,358,0.895

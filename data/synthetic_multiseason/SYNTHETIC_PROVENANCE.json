@@ -1,0 +1,15 @@
+{
+  "title": "Deterministic multi-season synthetic fixture",
+  "generator": "analytic sinusoidal profiles; no upstream observations",
+  "rows": 285,
+  "development_rows": 96,
+  "confirmation_rows": 189,
+  "seasons": [
+    "winter",
+    "spring",
+    "summer",
+    "autumn"
+  ],
+  "sha256": "b93b0c7e10d116c2fbde0ba328b0cba1a5578003b07fcd8fefd32e0d4b480895",
+  "licence": "CC0-1.0"
+}

@@ -1,3 +1,3 @@
 # Security policy
 
-Report integrity or parser vulnerabilities privately to the corresponding author before public disclosure.
+Report integrity or parser vulnerabilities confidentially to the maintainer before public disclosure.

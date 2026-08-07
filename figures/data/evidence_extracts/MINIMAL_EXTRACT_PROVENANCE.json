@@ -1,0 +1,18 @@
+{
+  "source_archive": "PCPI_SIMPAT_GPT56_LOAD_BEARING_EVIDENCE_2026-08-04(1).zip",
+  "source_files": {
+    "application_primary_summary.json": {
+      "path": "PCPI_SIMPAT_GPT56_LOAD_BEARING_EVIDENCE_2026-08-04/03_LOAD_BEARING_EXPERIMENTS/PHASE_07_APPLICATION_CONFIRMATORY/application_primary_summary.json",
+      "source_sha256": "278a88745189f72d5f68e715c86e7cc61ea4096bd61cd7799a6e49ae7b035150"
+    },
+    "application_sensitivity_summary.json": {
+      "path": "PCPI_SIMPAT_GPT56_LOAD_BEARING_EVIDENCE_2026-08-04/03_LOAD_BEARING_EXPERIMENTS/PHASE_07_APPLICATION_CONFIRMATORY/application_sensitivity_summary.json",
+      "source_sha256": "5ac0ee18ee8a86f05f19c16e8b47548ee90675f159c6490fb430b7f0345d8702"
+    }
+  },
+  "transformations": [
+    "role metadata normalised from legacy internal wording to the authorised prospectively frozen wording",
+    "all numerical values and evidence fields preserved"
+  ],
+  "external_preregistration_claimed": false
+}

@@ -1,0 +1,13 @@
+cell_id,method,dimension,covariance,null_geometry,challengers,replications,delta,familywise_gate
+NULL-00,coordinate,2,identity,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-01,coordinate,2,compound_rho_0.5,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-02,coordinate,4,identity,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-03,coordinate,4,compound_rho_0.5,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-04,hotelling,2,identity,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-05,hotelling,2,compound_rho_0.5,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-06,hotelling,4,identity,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-07,hotelling,4,compound_rho_0.5,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-08,hybrid,2,identity,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-09,hybrid,2,compound_rho_0.5,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-10,hybrid,4,identity,least_favourable_dominator_boundary,3,3000,0.05,True
+NULL-11,hybrid,4,compound_rho_0.5,least_favourable_dominator_boundary,3,3000,0.05,True

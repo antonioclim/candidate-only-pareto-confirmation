@@ -1,0 +1,16 @@
+cell_id,family,change,replications,ci_level,role
+APP-PRIMARY,primary,none,400,0.95,single confirmatory application contrast
+SEN-01,battery,"capacity=5 MWh, power=2 MW",200,0.99,descriptive sensitivity
+SEN-02,battery,"capacity=20 MWh, power=8 MW",200,0.99,descriptive sensitivity
+SEN-03,battery,"capacity=10 MWh, power=2 MW",200,0.99,descriptive sensitivity
+SEN-04,battery,"capacity=10 MWh, power=8 MW",200,0.99,descriptive sensitivity
+SEN-05,battery,charge/discharge efficiency=0.90,200,0.99,descriptive sensitivity
+SEN-06,terminal,terminal value quantile=0.25,200,0.99,descriptive sensitivity
+SEN-07,terminal,terminal value quantile=0.75,200,0.99,descriptive sensitivity
+SEN-08,generator,all perturbation SDs x0.75,200,0.99,descriptive sensitivity
+SEN-09,generator,all perturbation SDs x1.25,200,0.99,descriptive sensitivity
+SEN-10,generator,window-uniform season sampling,200,0.99,descriptive sensitivity
+SEN-11,selection,equal weights,200,0.99,descriptive sensitivity
+SEN-12,selection,cost-heavy weights,200,0.99,descriptive sensitivity
+SEN-13,selection,peak-heavy weights,200,0.99,descriptive sensitivity
+SEN-14,archive,ultra-hard archive stress tier,200,0.99,descriptive stress

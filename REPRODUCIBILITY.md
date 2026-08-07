@@ -1,40 +1,46 @@
 # Reproducibility
 
-## Environment
-
-Python 3.10 or later is required. The exact packages used for the verified
-release are listed in `requirements-lock.txt`. The repository also includes
-Docker and Apptainer recipes, a CycloneDX SBOM and a multi-platform GitHub
-Actions workflow.
-
-## Core checks
+## Fast verification
 
 ```bash
 python -m pip install -e ".[dev]"
-python -m pytest -q
 python -m coverage run -m pytest -q
-python -m coverage report --fail-under=90
+python -m coverage report --fail-under=95
 python tools/manual_mutation_suite.py
-python tools/verify_paired_certificate_standalone.py \
-  --artifact evidence/artefact/example_certificate.json \
-  --raw evidence/artefact/example_raw.csv \
-  --schema schemas/pcpi_paired_candidate_certificate.schema.json
+python scripts/verify_accelerated_equivalence.py
+python scripts/verify_release.py
 ```
 
-## Experiment drivers
+## Synthetic application example
 
-- `scripts/run_multiseason_application.py`
-- `scripts/run_tracker_alignment.py`
-- `scripts/run_robustness_study.py`
+```bash
+python scripts/run_synthetic_application.py
+```
 
-The scripts use fixed seeds and produce the aggregate files already stored in
-`evidence/`. The data provenance contract is under `data/`.
+## Full calibration campaign
 
-## Verified release status
+```bash
+python scripts/run_calibration_campaign.py --campaign all --workers 4
+python scripts/aggregate_calibration_results.py
+```
 
-- 50 tests passed;
-- 95% statement coverage;
-- 9/9 deterministic mutation probes killed;
-- 14/14 artefact conformance cases passed;
-- standalone verifier reproduced the example verdict and stopping count;
-- clean-extraction package test passed.
+The release contains compact summary evidence. Full project-generated raw
+outputs are available in the separate research-data package.
+
+## Associated research outputs
+
+The project-generated raw outputs, summaries and figure-source data are archived
+in the separate dataset record `10.5281/zenodo.21802337` after its controlled publication.
+
+
+## Figure-generation verification
+
+```bash
+python -m pip install -r figures/requirements-figures-lock.txt
+python figures/build/repack_ooxml.py
+python figures/build/render_exact_reference.py
+python figures/build/build_quantitative.py
+python figures/build/validate.py
+```
+
+The figure kit includes only minimal derived inputs required for figure reproduction. The complete project-generated research outputs remain in the associated dataset record. The `figures/` directory is part of the repository/source archive and is not installed by the core wheel.

@@ -1,0 +1,25 @@
+cell_id,data_generating_mechanism,stress_class,method,primary_method,replications,false_certifications,false_certification_rate,monte_carlo_se,one_sided_cp_upper_95,nominal_delta,rate_exceeds_nominal_delta,upper_bound_exceeds_gate_0.065,boundary_ever_crossed_rate,easy_controls_jointly_crossed_rate,full_rank_final_rate,false_certification_median_stopping_count,restricted_mean_stopping_count,interpretation
+ROB-00,iid Gaussian reference,inside exact model,coordinate,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,inside exact Gaussian model
+ROB-00,iid Gaussian reference,inside exact model,hotelling,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.003,1.0,1.0,,2000.0,inside exact Gaussian model
+ROB-00,iid Gaussian reference,inside exact model,hybrid,True,1000,1,0.001,0.0009994998749374609,0.004734993575499777,0.05,False,False,0.002,1.0,1.0,28.0,1998.028,inside exact Gaussian model
+ROB-01,"multivariate t, df=5",heavy tails,coordinate,False,1000,1,0.001,0.0009994998749374609,0.004734993575499777,0.05,False,False,0.001,1.0,1.0,28.0,1998.028,outside theorem; applicability-boundary diagnostic
+ROB-01,"multivariate t, df=5",heavy tails,hotelling,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-01,"multivariate t, df=5",heavy tails,hybrid,True,1000,1,0.001,0.0009994998749374609,0.004734993575499777,0.05,False,False,0.001,1.0,1.0,28.0,1998.028,outside theorem; applicability-boundary diagnostic
+ROB-02,"multivariate t, df=3",severe heavy tails,coordinate,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-02,"multivariate t, df=3",severe heavy tails,hotelling,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-02,"multivariate t, df=3",severe heavy tails,hybrid,True,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-03,centred lognormal coordinates,skewness,coordinate,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-03,centred lognormal coordinates,skewness,hotelling,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-03,centred lognormal coordinates,skewness,hybrid,True,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-04,1% ten-SD contamination,outliers,coordinate,False,1000,1,0.001,0.0009994998749374609,0.004734993575499777,0.05,False,False,0.001,1.0,1.0,48.0,1998.048,outside theorem; applicability-boundary diagnostic
+ROB-04,1% ten-SD contamination,outliers,hotelling,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,outside theorem; applicability-boundary diagnostic
+ROB-04,1% ten-SD contamination,outliers,hybrid,True,1000,1,0.001,0.0009994998749374609,0.004734993575499777,0.05,False,False,0.001,1.0,1.0,48.0,1998.048,outside theorem; applicability-boundary diagnostic
+ROB-05,AR(1) rho=0.3,serial dependence,coordinate,False,1000,22,0.022,0.0046385342512479085,0.031266631392580166,0.05,False,False,0.039,1.0,1.0,93.0,1958.841,outside theorem; applicability-boundary diagnostic
+ROB-05,AR(1) rho=0.3,serial dependence,hotelling,False,1000,14,0.014,0.003715373467095872,0.02180013152550217,0.05,False,False,0.017,1.0,1.0,58.0,1973.642,outside theorem; applicability-boundary diagnostic
+ROB-05,AR(1) rho=0.3,serial dependence,hybrid,True,1000,20,0.02,0.004427188724235731,0.028930122851398708,0.05,False,False,0.032,1.0,1.0,93.0,1962.855,outside theorem; applicability-boundary diagnostic
+ROB-06,AR(1) rho=0.6,strong serial dependence,coordinate,False,1000,306,0.306,0.0145727142289966,0.3308739183932262,0.05,True,True,0.372,1.0,1.0,95.5,1471.508,outside theorem; applicability-boundary diagnostic
+ROB-06,AR(1) rho=0.6,strong serial dependence,hotelling,False,1000,233,0.233,0.013368283360252356,0.25605825384071323,0.05,True,True,0.277,1.0,1.0,143.0,1614.214,outside theorem; applicability-boundary diagnostic
+ROB-06,AR(1) rho=0.6,strong serial dependence,hybrid,True,1000,282,0.282,0.014229406171727617,0.3063632673762763,0.05,True,True,0.337,1.0,1.0,103.0,1522.431,outside theorem; applicability-boundary diagnostic
+ROB-07,near-singular covariance,rank/numerical stress,coordinate,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.001,1.0,1.0,,2000.0,inside exact Gaussian model
+ROB-07,near-singular covariance,rank/numerical stress,hotelling,False,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,inside exact Gaussian model
+ROB-07,near-singular covariance,rank/numerical stress,hybrid,True,1000,0,0.0,0.0,0.002991249545095295,0.05,False,False,0.0,1.0,1.0,,2000.0,inside exact Gaussian model

@@ -1,0 +1,9 @@
+{
+  "title": "Deterministic six-day synthetic fixture",
+  "generator": "analytic sinusoidal profiles; no upstream observations",
+  "rows": 144,
+  "development_rows": 72,
+  "confirmation_rows": 72,
+  "sha256": "95ac162a7c15871c14fa11c8ca4be8bc2cb945aadbee80ac0e5044d4625d06f1",
+  "licence": "CC0-1.0"
+}

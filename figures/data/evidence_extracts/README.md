@@ -1,0 +1,1 @@
+Minimal project-derived figure inputs. Numerical fields are preserved from frozen evidence; role labels are normalised to the authorised phrase “prospectively frozen” and do not claim external preregistration.

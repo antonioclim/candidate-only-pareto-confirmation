@@ -1,0 +1,19 @@
+{
+  "specification": "pcpi-study-design/1.0",
+  "software_version": "1.2.0",
+  "design": {
+    "application_replications": 400,
+    "development_scenarios_per_replication": 400,
+    "confirmation_scenarios_per_replication": 2000,
+    "common_sample_cap": 2000,
+    "stopping_grid": 5,
+    "delta": 0.05,
+    "calibration_replications_per_cell": 3000,
+    "robustness_replications_per_cell": 1000
+  },
+  "data_policy": {
+    "release_examples": "deterministic synthetic fixtures",
+    "external_data": "user supplied and not redistributed"
+  },
+  "design_sha256": "f1cbe36b64982b27d987d83b30a8f7b2546db7323a4043d3dc076d5525b0c857"
+}
