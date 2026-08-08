@@ -4,8 +4,13 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -40,6 +45,7 @@ jobs:
         run: python -m pip wheel . --no-deps -w dist
 
   figures:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
