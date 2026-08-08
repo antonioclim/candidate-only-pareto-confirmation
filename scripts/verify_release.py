@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
 import re
 import subprocess
@@ -13,6 +14,8 @@ INVENTORY_PATH = ROOT / "FILE_INVENTORY.csv"
 CHECKSUM_PATH = ROOT / "SHA256SUMS.txt"
 ROOT_MANIFESTS = {"FILE_INVENTORY.csv", "SHA256SUMS.txt"}
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}\Z")
+GIT_LIST_TIMEOUT_SECONDS = 30
+GIT_BATCH_TIMEOUT_SECONDS = 60
 
 
 def sha256_file(path: Path) -> str:
@@ -107,67 +110,103 @@ def _load_checksums() -> tuple[dict[str, str], list[str]]:
     return records, errors
 
 
-def _git_blob_records() -> dict[str, tuple[int, str]] | None:
-    """Return raw committed blob bytes without checkout or archive conversions."""
+def _decode_stderr(value: bytes | None) -> str:
+    return (value or b"").decode("utf-8", errors="replace").strip()
+
+
+def _git_blob_records() -> tuple[dict[str, tuple[int, str]] | None, str | None]:
+    """Return raw committed blob bytes without checkout or archive conversions.
+
+    The batch request is executed with ``subprocess.run`` so stdin and stdout are
+    drained concurrently on every platform. Explicit timeouts prevent a runner
+    from remaining blocked indefinitely.
+    """
     try:
-        listing = subprocess.run(
+        listed = subprocess.run(
             ["git", "-C", str(ROOT), "ls-tree", "-r", "-z", "--full-tree", "HEAD"],
             check=True,
             stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL,
-        ).stdout
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        return None
-
-    entries: list[tuple[str, str]] = []
-    for record in listing.split(b"\0"):
-        if not record:
-            continue
-        metadata, path_bytes = record.split(b"\t", 1)
-        _mode, object_type, object_sha = metadata.split()
-        if object_type != b"blob":
-            continue
-        entries.append((path_bytes.decode("utf-8"), object_sha.decode("ascii")))
-
-    try:
-        process = subprocess.Popen(
-            ["git", "-C", str(ROOT), "cat-file", "--batch"],
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            timeout=GIT_LIST_TIMEOUT_SECONDS,
         )
     except FileNotFoundError:
-        return None
+        return None, None
+    except subprocess.TimeoutExpired:
+        return None, (
+            f"git ls-tree timed out after {GIT_LIST_TIMEOUT_SECONDS} seconds"
+        )
+    except subprocess.CalledProcessError as exc:
+        detail = _decode_stderr(exc.stderr)
+        if "not a git repository" in detail.lower():
+            return None, None
+        return None, f"git ls-tree failed: {detail or f'exit code {exc.returncode}'}"
 
-    assert process.stdin is not None
-    assert process.stdout is not None
-    for _relative, object_sha in entries:
-        process.stdin.write(object_sha.encode("ascii") + b"\n")
-    process.stdin.close()
+    entries: list[tuple[str, str]] = []
+    for record in listed.stdout.split(b"\0"):
+        if not record:
+            continue
+        try:
+            metadata, path_bytes = record.split(b"\t", 1)
+            _mode, object_type, object_sha = metadata.split()
+        except ValueError:
+            return None, "git ls-tree returned a malformed record"
+        if object_type != b"blob":
+            continue
+        try:
+            relative = path_bytes.decode("utf-8")
+            sha = object_sha.decode("ascii")
+        except UnicodeDecodeError:
+            return None, "git ls-tree returned a non-UTF-8 path or object id"
+        entries.append((relative, sha))
 
-    records: dict[str, tuple[int, str]] = {}
+    request = b"".join(
+        object_sha.encode("ascii") + b"\n" for _relative, object_sha in entries
+    )
     try:
-        for relative, expected_sha in entries:
-            header = process.stdout.readline().rstrip(b"\n")
-            parts = header.split()
-            if len(parts) != 3:
-                process.kill()
-                return None
-            actual_sha, object_type, size_text = parts
-            if actual_sha.decode("ascii") != expected_sha or object_type != b"blob":
-                process.kill()
-                return None
-            size = int(size_text)
-            data = process.stdout.read(size)
-            separator = process.stdout.read(1)
-            if len(data) != size or separator != b"\n":
-                process.kill()
-                return None
-            records[relative] = (size, hashlib.sha256(data).hexdigest())
-    finally:
-        return_code = process.wait()
+        completed = subprocess.run(
+            ["git", "-C", str(ROOT), "cat-file", "--batch"],
+            input=request,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=GIT_BATCH_TIMEOUT_SECONDS,
+        )
+    except FileNotFoundError:
+        return None, "git executable disappeared during raw-blob verification"
+    except subprocess.TimeoutExpired:
+        return None, (
+            f"git cat-file --batch timed out after {GIT_BATCH_TIMEOUT_SECONDS} seconds"
+        )
+    except subprocess.CalledProcessError as exc:
+        detail = _decode_stderr(exc.stderr)
+        return None, f"git cat-file --batch failed: {detail or f'exit code {exc.returncode}'}"
 
-    return records if return_code == 0 else None
+    stream = io.BytesIO(completed.stdout)
+    records: dict[str, tuple[int, str]] = {}
+    for relative, expected_sha in entries:
+        header = stream.readline()
+        if not header:
+            return None, f"git cat-file output ended before {relative}"
+        parts = header.rstrip(b"\n").split()
+        if len(parts) != 3:
+            return None, f"git cat-file returned a malformed header for {relative}"
+        actual_sha, object_type, size_text = parts
+        try:
+            actual_sha_text = actual_sha.decode("ascii")
+            size = int(size_text)
+        except (UnicodeDecodeError, ValueError):
+            return None, f"git cat-file returned invalid metadata for {relative}"
+        if actual_sha_text != expected_sha or object_type != b"blob":
+            return None, f"git cat-file object mismatch for {relative}"
+        data = stream.read(size)
+        separator = stream.read(1)
+        if len(data) != size or separator != b"\n":
+            return None, f"git cat-file returned a truncated blob for {relative}"
+        records[relative] = (size, hashlib.sha256(data).hexdigest())
+
+    if stream.read(1):
+        return None, "git cat-file returned unexpected trailing bytes"
+    return records, None
 
 
 def _filesystem_record(relative: str) -> tuple[int, str] | None:
@@ -189,7 +228,17 @@ def _verify_manifests() -> dict[str, object]:
     for relative in sorted(checksum_paths - inventory_paths):
         errors.append(f"missing from FILE_INVENTORY.csv: {relative}")
 
-    canonical = _git_blob_records()
+    canonical, git_error = _git_blob_records()
+    if git_error is not None:
+        errors.append(f"canonical Git-blob verification failed: {git_error}")
+        return {
+            "inventory_records": len(inventory),
+            "checksum_records": len(checksums),
+            "verification_source": "git_raw_blobs_error",
+            "errors": errors,
+            "valid": False,
+        }
+
     source = "git_raw_blobs" if canonical is not None else "filesystem"
     if canonical is not None:
         expected_tracked = inventory_paths | ROOT_MANIFESTS
