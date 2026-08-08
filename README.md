@@ -1,40 +1,33 @@
 # One-Sided Candidate-Only Pareto Confirmation
 
-[![Software version](https://img.shields.io/badge/version-1.1.0-blue.svg)](RELEASE_NOTES_v1.1.0.md)
+[![Software version](https://img.shields.io/badge/version-1.2.0-blue.svg)](RELEASE_NOTES_v1.2.0.md)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-green.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21762634.svg)](https://doi.org/10.5281/zenodo.21762634)
 
-This repository contains the software and reproducibility core for a one-sided
-procedure that may confirm that one externally selected candidate is
-Pareto-nondominated in mean relative to one fixed finite archive. The procedure
-may issue a positive archive-relative certificate or remain undecided. It is not
-a total fixed-confidence identification algorithm, and non-certification is not
-a domination verdict.
+This repository contains a software and reproducibility core for confirming
+strict positive-witness archive separation for one externally selected candidate
+relative to one fixed finite archive. For every declared challenger, the
+certificate requires evidence that the challenger is strictly worse than the
+candidate in at least one minimised objective.
 
-## Public repository scope
+This proposition implies ordinary archive-relative Pareto nondominance, but is
+strictly stronger on equality boundaries: an exact tie remains non-certifiable.
+The procedure may issue the positive certificate or remain undecided.
+Non-certification is not a domination verdict, and the software is not a total
+fixed-confidence Pareto-front identification algorithm.
 
-The repository contains only the software and reproducibility core:
+## Version 1.2.0
 
-- Python source code and command-line interface;
-- automated tests, coverage records and deterministic mutation probes;
-- strict JSON Schema and example raw-bound evidence artefacts;
-- standalone certificate verifier;
-- reproducibility scripts and minimal derived data with machine-readable
-  provenance;
-- build, container, SBOM and continuous-integration configuration.
+This release adds:
 
-The unpublished manuscript, supplementary manuscript, submission documents and
-article PDFs are intentionally **not included** in this repository or in the
-associated Zenodo software record.
-
-## Explicit non-claims
-
-- no global delta-PAC identification;
-- no expected-time first-order optimality;
-- no novelty claim for the generic scalar equalisation/inverse-root architecture;
-- no complete Pareto-front recovery;
-- no validity under unmodelled temporal dependence;
-- no authentication of the simulator or upstream selection process.
+- an explicit strict-positive-witness semantic contract;
+- paired coordinate, Hotelling and hybrid confirmation;
+- reference-equivalent accelerated execution kernels;
+- a prospectively frozen exact-Gaussian calibration design;
+- machine-readable applicability boundaries;
+- deterministic synthetic fixtures;
+- a strict source-data non-redistribution policy;
+- 95% statement-coverage enforcement;
+- a source-based reproducible figure-generation kit using PlantUML semantic sources, Python quantitative sources and a normalised OOXML exact-layout layer.
 
 ## Installation
 
@@ -42,47 +35,67 @@ associated Zenodo software record.
 python -m pip install -e ".[dev]"
 ```
 
-## Core verification
+## Verification
 
 ```bash
 python -m pytest -q
 python -m coverage run -m pytest -q
-python -m coverage report --fail-under=90
+python -m coverage report --fail-under=95
 python tools/manual_mutation_suite.py
-python tools/verify_paired_certificate_standalone.py \
-  --artifact evidence/artefact/example_certificate.json \
-  --raw evidence/artefact/example_raw.csv \
-  --schema schemas/pcpi_paired_candidate_certificate.schema.json
+python tools/verify_paired_certificate_standalone.py --artifact evidence/examples/example_certificate.json --raw evidence/examples/example_raw.csv --schema schemas/pcpi_paired_candidate_certificate.schema.json
+python scripts/verify_accelerated_equivalence.py
+python scripts/verify_release.py
 ```
 
-The v1.1.0 core reports 50 passing tests, 95% statement coverage, 9/9
-mutation probes killed and 14/14 artefact conformance cases.
+## Data policy
 
-## Reproducibility resources
+Only deterministic synthetic fixtures are included. Upstream observation rows
+are not redistributed. Users may provide compatible data under their own
+data-use obligations.
 
-Deterministic experiment drivers are under `scripts/`. Minimal example evidence
-is stored under `evidence/artefact/`; source data and machine-readable
-provenance are under `data/`. Larger unpublished study outputs are not required
-for installing or testing the software core and are not included here.
+Project-generated study outputs are distributed separately as a research-data
+record. The unpublished article, supplement and submission files are not
+included in this software repository.
 
-## Citation and persistent identifier
+## Explicit non-claims
 
-Archived software core v1.1.0: [10.5281/zenodo.21762634](https://doi.org/10.5281/zenodo.21762634).
+- no certificate for equality-boundary ordinary nondominance;
+- no global delta-PAC Pareto-front identification;
+- no expected-time first-order optimality;
+- no distribution-free validity;
+- no validity under unmodelled temporal dependence;
+- no universal algorithmic superiority;
+- no authentication of a simulator or upstream selection process.
 
-See `CITATION.cff` for machine-readable citation metadata. The DOI was assigned
-after the `v1.1.0` tag and binary assets were published; the tag and release
-assets remain unchanged, while this default-branch metadata update records the
-persistent identifier.
+Strong AR(1) dependence is an observed failure boundary and remains outside the
+validity contract.
 
-## Data provenance
+## Citation and related records
 
-The included seasonal data are a derived public-mirror subset with pinned
-repository commit, upstream blob identifiers, source line ranges, merge rules
-and SHA-256 recorded in `data/multiseason/MULTISEASON_PROVENANCE.json`. They are
-not the complete official OPSD package.
+Version-specific software DOI:
+`10.5281/zenodo.21801863`.
 
-## Licence
+Research-outputs dataset DOI (separate record): `10.5281/zenodo.21802337`.
 
-Software source code is released under the BSD 3-Clause licence. Textual
-documentation and non-code metadata are licensed under CC BY 4.0 unless a file
-states otherwise.
+Previous public software version 1.1.0: `10.5281/zenodo.21762634`.
+
+`CITATION.cff` deliberately omits `date-released` while this object remains
+unpublished. The actual first-public-availability date must be inserted only at
+publication.
+
+
+## Reproducible figure generation
+
+The `figures/` directory contains the source-based figure-generation kit.
+
+```bash
+python -m pip install -r figures/requirements-figures-lock.txt
+python figures/build/repack_ooxml.py
+python figures/build/render_exact_reference.py
+python figures/build/build_quantitative.py
+python figures/build/validate.py
+```
+
+Conceptual semantics are available as PlantUML sources. Quantitative figures are generated from compact project-derived evidence extracts. Normalised OOXML packages preserve the exact approved editorial layout and can be repacked deterministically by Python. PlantUML itself is not bundled; the required version and hash are recorded in `figures/toolchain/plantuml.lock.json`.
+
+The figure kit is distributed with the repository/source archive and Zenodo software bundle; it is not installed by the core Python wheel.

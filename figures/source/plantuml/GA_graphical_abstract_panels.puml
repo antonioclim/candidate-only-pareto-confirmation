@@ -1,0 +1,20 @@
+
+    @startuml
+    !include common/pcpi_theme.puml
+    title Graphical abstract — semantic panel source
+    left to right direction
+
+    rectangle "Selected candidate
+archive-relative confirmation" as g1 #E8F1FB
+    rectangle "Exact Gaussian calibration
+12/12 cells passed" as g2 #EEF6EA
+    rectangle "Explicit failure boundary
+strong AR(1) dependence refutes validity" as g3 #FFF2F2
+    rectangle "Application result
+cap-saturated scope-cost reduction
+not a universal superiority claim" as g4 #FFF7E8
+
+    g1 --> g2
+    g2 --> g3
+    g3 --> g4
+    @enduml

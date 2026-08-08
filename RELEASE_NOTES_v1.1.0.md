@@ -26,7 +26,5 @@ software and reproducibility core.
 - deterministic manifests and release bundles.
 
 The unpublished manuscript and supplementary manuscript are intentionally not
-included. The archived software core is available at [10.5281/zenodo.21762634](https://doi.org/10.5281/zenodo.21762634).
-
-The DOI was added to default-branch metadata after publication; the `v1.1.0`
-tag and release assets remain unchanged.
+included. The archived software core is available at
+[10.5281/zenodo.21762634](https://doi.org/10.5281/zenodo.21762634).

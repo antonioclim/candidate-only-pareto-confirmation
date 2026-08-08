@@ -45,8 +45,18 @@ class GaussianCandidateInstance:
         return self.means[1:] - self.means[0]
 
     @property
-    def strictly_nondominated_candidate(self) -> bool:
+    def strict_positive_witness_candidate(self) -> bool:
+        """Each challenger is strictly worse in at least one minimised objective."""
         return bool(np.all(np.max(self.gaps, axis=1) > 0))
+
+    @property
+    def strictly_nondominated_candidate(self) -> bool:
+        """Backward-compatible alias for the strict positive-witness property.
+
+        The name predates the explicit distinction from ordinary Pareto
+        nondominance on equality boundaries.
+        """
+        return self.strict_positive_witness_candidate
 
     @classmethod
     def from_arrays(
@@ -92,6 +102,13 @@ class CandidateRunResult:
     boundary_method: str
     spending: str
     trace: tuple[dict, ...]
+    algorithm_id: str = ""
+    theorem_covered: bool = False
+    termination_reason: str = "sample_cap"
+    stopping_grid: str = ""
+    oracle_updates: int = 0
+    decision_checks: int = 0
+    batches: int = 0
 
 
 @dataclass(frozen=True)

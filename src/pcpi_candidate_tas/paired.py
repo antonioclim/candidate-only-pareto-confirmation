@@ -100,38 +100,59 @@ def coordinate_t_statistics(mean: np.ndarray,covariance: np.ndarray,count:int) -
     return out
 
 
-def evaluate_paired_samples(samples: np.ndarray,delta:float,*,method:Method="hybrid",hybrid_hotelling_share:float=0.5) -> PairedDecision:
-    x=np.asarray(samples,dtype=float)
-    mean,cov=sample_mean_cov(x)
-    count,dimension=x.shape
-    alpha=intrinsic_alpha(delta,count)
-    if method not in {"hotelling","coordinate","hybrid"}:
+def evaluate_paired_statistics(
+    mean: np.ndarray, covariance: np.ndarray, count: int, delta: float, *,
+    method: Method = "hybrid", hybrid_hotelling_share: float = 0.5,
+) -> PairedDecision:
+    """Evaluate one challenger from sufficient statistics."""
+    mean = np.asarray(mean, dtype=float)
+    covariance = np.asarray(covariance, dtype=float)
+    if mean.ndim != 1 or covariance.shape != (mean.size, mean.size):
+        raise ValueError("incompatible mean and covariance")
+    if count < 2 or not np.all(np.isfinite(mean)) or not np.all(np.isfinite(covariance)):
+        raise ValueError("finite statistics and count >= 2 are required")
+    dimension = mean.size
+    alpha = intrinsic_alpha(delta, count)
+    if method not in {"hotelling", "coordinate", "hybrid"}:
         raise ValueError("unknown method")
-    if not 0.0<hybrid_hotelling_share<1.0:
+    if not 0.0 < hybrid_hotelling_share < 1.0:
         raise ValueError("hybrid share must lie in (0,1)")
-    hot_alpha=alpha if method=="hotelling" else alpha*hybrid_hotelling_share
-    coord_alpha=alpha if method=="coordinate" else alpha*(1-hybrid_hotelling_share)
-    distance,rank=orthant_mahalanobis_distance(mean,cov,count)
-    hthr=None
-    hcross=False
-    if count>dimension and rank==dimension and math.isfinite(distance):
-        hthr=hotelling_threshold(hot_alpha,count,dimension)
-        hcross=distance>hthr
-    tstats=coordinate_t_statistics(mean,cov,count)
-    witness=int(np.argmax(tstats))
-    tmax=float(tstats[witness])
-    cthr=None
-    ccross=False
-    if count>=2:
-        # Union over objectives at a fixed intrinsic count.
-        cthr=float(t.isf(coord_alpha/dimension,count-1))
-        ccross=tmax>cthr
-    if method=="hotelling": crossed=hcross
-    elif method=="coordinate": crossed=ccross
-    else: crossed=hcross or ccross
-    return PairedDecision(bool(crossed),method,count,alpha,
-                          None if not math.isfinite(distance) else distance,hthr,
-                          tmax,cthr,witness,rank)
+    hot_alpha = alpha if method == "hotelling" else alpha * hybrid_hotelling_share
+    coord_alpha = alpha if method == "coordinate" else alpha * (1.0 - hybrid_hotelling_share)
+    distance, rank = orthant_mahalanobis_distance(mean, covariance, count)
+    hot_threshold = None
+    hot_crossed = False
+    if count > dimension and rank == dimension and math.isfinite(distance):
+        hot_threshold = hotelling_threshold(hot_alpha, count, dimension)
+        hot_crossed = distance > hot_threshold
+    t_statistics = coordinate_t_statistics(mean, covariance, count)
+    witness = int(np.argmax(t_statistics))
+    t_max = float(t_statistics[witness])
+    coordinate_threshold = float(t.isf(coord_alpha / dimension, count - 1))
+    coordinate_crossed = t_max > coordinate_threshold
+    if method == "hotelling":
+        crossed = hot_crossed
+    elif method == "coordinate":
+        crossed = coordinate_crossed
+    else:
+        crossed = hot_crossed or coordinate_crossed
+    return PairedDecision(
+        bool(crossed), method, count, alpha,
+        None if not math.isfinite(distance) else distance, hot_threshold,
+        t_max, coordinate_threshold, witness, rank,
+    )
+
+
+def evaluate_paired_samples(
+    samples: np.ndarray, delta: float, *, method: Method = "hybrid",
+    hybrid_hotelling_share: float = 0.5,
+) -> PairedDecision:
+    x = np.asarray(samples, dtype=float)
+    mean, covariance = sample_mean_cov(x)
+    return evaluate_paired_statistics(
+        mean, covariance, x.shape[0], delta, method=method,
+        hybrid_hotelling_share=hybrid_hotelling_share,
+    )
 
 
 def evaluate_archive(differences: np.ndarray,delta:float,*,method:Method="hybrid",hybrid_hotelling_share:float=0.5) -> tuple[bool,tuple[PairedDecision,...]]:
@@ -151,22 +172,72 @@ def evaluate_archive(differences: np.ndarray,delta:float,*,method:Method="hybrid
     return bool(all(x.crossed for x in decisions)),decisions
 
 
-def sequential_archive_confirmation(differences:np.ndarray,delta:float,*,method:Method="hybrid",hybrid_hotelling_share:float=0.5,min_count:int|None=None,max_count:int|None=None,check_every:int=1) -> dict:
-    d=np.asarray(differences,dtype=float)
-    if d.ndim!=3: raise ValueError("challenger-by-count-by-objective required")
-    n_challengers,total,dimension=d.shape
-    start=max(3,dimension+2) if min_count is None else max(2,int(min_count))
-    end=total if max_count is None else min(total,int(max_count))
-    last=()
-    if check_every < 1: raise ValueError("check_every >= 1 required")
-    grid=list(range(start,end+1,check_every))
-    if not grid or grid[-1]!=end:grid.append(end)
-    for s in grid:
-        certified,last=evaluate_archive(d[:,:s],delta,method=method,
-                                        hybrid_hotelling_share=hybrid_hotelling_share)
-        if certified:
-            return {"certified":True,"stopping_count":s,"decisions":last}
-    if not last:
-        _,last=evaluate_archive(d[:,:end],delta,method=method,
-                                hybrid_hotelling_share=hybrid_hotelling_share)
-    return {"certified":False,"stopping_count":end,"decisions":last}
+def sequential_archive_confirmation(
+    differences: np.ndarray, delta: float, *, method: Method = "hybrid",
+    hybrid_hotelling_share: float = 0.5, min_count: int | None = None,
+    max_count: int | None = None, check_every: int = 1,
+) -> dict:
+    """Sequential paired confirmation using one-pass Welford statistics.
+
+    The former implementation recomputed means and covariances from every raw
+    prefix, which made dense stopping grids quadratic in the number of paired
+    scenarios. This implementation updates sufficient statistics once per
+    scenario and evaluates only on the declared intrinsic-count grid.
+    """
+    data = np.asarray(differences, dtype=float)
+    if data.ndim != 3 or data.shape[0] < 1 or data.shape[2] < 1:
+        raise ValueError("challenger-by-count-by-objective required")
+    if not np.all(np.isfinite(data)):
+        raise ValueError("differences must be finite")
+    challenger_count, total, dimension = data.shape
+    if check_every < 1:
+        raise ValueError("check_every >= 1 required")
+    start = max(3, dimension + 2) if min_count is None else max(2, int(min_count))
+    end = total if max_count is None else min(total, int(max_count))
+    if end < 2:
+        raise ValueError("at least two paired scenarios are required")
+    start = min(start, end)
+    check_grid = set(range(start, end + 1, check_every))
+    check_grid.add(end)
+
+    means = np.zeros((challenger_count, dimension), dtype=float)
+    m2 = np.zeros((challenger_count, dimension, dimension), dtype=float)
+    last: tuple[PairedDecision, ...] = ()
+    checks = 0
+    for index in range(end):
+        count = index + 1
+        observation = data[:, index, :]
+        delta_before = observation - means
+        means += delta_before / count
+        delta_after = observation - means
+        m2 += np.einsum("ci,cj->cij", delta_before, delta_after)
+        if count not in check_grid:
+            continue
+        covariance = m2 / (count - 1)
+        last = tuple(
+            evaluate_paired_statistics(
+                means[challenger], covariance[challenger], count, delta,
+                method=method,
+                hybrid_hotelling_share=hybrid_hotelling_share,
+            )
+            for challenger in range(challenger_count)
+        )
+        checks += 1
+        if all(decision.crossed for decision in last):
+            return {
+                "certified": True,
+                "stopping_count": count,
+                "decisions": last,
+                "decision_checks": checks,
+                "algorithm_id": "paired_sequential_confirmation",
+                "stopping_grid": f"every_{check_every}_paired_counts",
+            }
+    return {
+        "certified": False,
+        "stopping_count": end,
+        "decisions": last,
+        "decision_checks": checks,
+        "algorithm_id": "paired_sequential_confirmation",
+        "stopping_grid": f"every_{check_every}_paired_counts",
+    }
+

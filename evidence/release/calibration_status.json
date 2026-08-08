@@ -1,0 +1,27 @@
+{
+  "specification": "pcpi-calibration-status/1.0",
+  "date": "2026-08-03",
+  "software_version": "1.2.0",
+  "execution_sha256": "f231aacd27f8998fed96c8387c860d19fde22f7f66879b5aeeb82e7e6c6a2fe7",
+  "core": {
+    "cells": 12,
+    "paths": 36000,
+    "false_certifications": 20,
+    "all_gate_passed": true,
+    "worst_adjusted_upper": 0.004276870274144364,
+    "gate_threshold": 0.065
+  },
+  "robustness": {
+    "primary_method": "hybrid",
+    "strong_ar1_rho_0_6_rate": 0.282,
+    "strong_ar1_rho_0_6_upper_95": 0.3063632673762763,
+    "mild_ar1_rho_0_3_rate": 0.02,
+    "no_theorem_extension": true
+  },
+  "claim_disposition": {
+    "exact_gaussian_implementation_calibration": "passed",
+    "serial_dependence_validity": "refuted at strong AR(1)",
+    "distribution_free_validity": "not claimed",
+    "near_singular_positive_definite_gaussian_stress": "passed"
+  }
+}

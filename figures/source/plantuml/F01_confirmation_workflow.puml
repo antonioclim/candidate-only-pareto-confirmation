@@ -1,0 +1,34 @@
+
+    @startuml
+    !include common/pcpi_theme.puml
+    title Figure 1. End-to-end candidate-only confirmation workflow
+    left to right direction
+
+    rectangle "Prospectively frozen archive
+and candidate-selection rule" as freeze #E8F1FB
+    rectangle "Observed archive member
+and selected candidate" as candidate #F7FBFF
+    rectangle "Sequential candidate-only
+confirmation experiment" as experiment #EEF6EA
+    rectangle "Positive certificate
+or undecided outcome" as outcome #FFF7E8
+    rectangle "Evidence artefact
+(hash, counts, replay inputs,
+bounds, stopping state)" as artefact #F7FBFF
+    rectangle "Independent statistical replay" as replay #EEF6EA
+    rectangle "Bounded trust claim:
+replay checks the reported statistical path
+but does not authenticate the simulator
+or validate the model" as trust #FFF2F2
+
+    freeze --> candidate
+    candidate --> experiment
+    experiment --> outcome
+    outcome --> artefact
+    artefact --> replay
+    replay --> trust
+
+    note bottom of outcome
+    Distinguish a positive certificate from an undecided result.
+    end note
+    @enduml

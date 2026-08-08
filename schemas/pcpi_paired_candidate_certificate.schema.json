@@ -25,7 +25,17 @@
           "const": "pcpi-candidate-certification"
         },
         "generator_version": {
-          "const": "1.1.0"
+          "enum": [
+            "1.1.0",
+            "1.2.0"
+          ],
+          "description": "Producer version; replay compatibility is retained for public release artefacts."
+        },
+        "algorithm_id": {
+          "enum": [
+            "paired_sequential_confirmation"
+          ],
+          "description": "Producing algorithm contract identifier."
         }
       }
     },
@@ -58,7 +68,8 @@
           ],
           "properties": {
             "type": {
-              "const": "candidateStrictlyParetoNondominatedInMean"
+              "const": "candidateStrictlyParetoNondominatedInMean",
+              "description": "Legacy stable token. Normative meaning: strict positive-witness archive separation; for every challenger, at least one minimised objective has challenger mean strictly above the candidate mean. Equality boundaries are not certifiable."
             },
             "candidate_id": {
               "type": "string",

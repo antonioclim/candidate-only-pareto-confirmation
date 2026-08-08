@@ -1,0 +1,16 @@
+{
+  "specification": "pcpi-seed-plan/1.0",
+  "calibration": {
+    "base": 3000000,
+    "replications_per_cell": 3000,
+    "formula": "base + cell_index * replications_per_cell + replication"
+  },
+  "robustness": {
+    "base": 10000000,
+    "replications_per_cell": 1000,
+    "formula": "base + cell_index * replications_per_cell + replication"
+  },
+  "application_example": {
+    "base": 1000000
+  }
+}

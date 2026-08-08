@@ -1,6 +1,7 @@
 from pathlib import Path
 import json,numpy as np,pytest
 from pcpi_candidate_tas.paired_artifacts import *
+from pcpi_candidate_tas import __version__
 ROOT=Path(__file__).resolve().parents[1]
 
 def fixture(tmp_path):
@@ -11,6 +12,7 @@ def fixture(tmp_path):
 
 def test_replay(tmp_path):
  raw,a=fixture(tmp_path);schema=ROOT/'schemas/pcpi_paired_candidate_certificate.schema.json'
+ assert a['execution_metadata']['generator_version']==__version__
  assert replay_paired_certificate(a,raw,schema)['valid']
 
 def test_raw_tamper(tmp_path):

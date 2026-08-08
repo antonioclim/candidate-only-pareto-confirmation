@@ -1,20 +1,66 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:pcpi-candidate-confirmation-v1.1.0",
+  "serialNumber": "urn:uuid:pcpi-candidate-certification-1.2.0",
   "version": 1,
   "metadata": {
+    "timestamp": "2026-08-04T00:00:00Z",
     "component": {
       "type": "application",
       "name": "pcpi-candidate-certification",
-      "version": "1.0.0"
-    },
-    "properties": [
-      {
-        "name": "generation",
-        "value": "deterministic release environment inventory"
-      }
-    ]
+      "version": "1.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/antonioclim/candidate-only-pareto-confirmation"
+        }
+      ],
+      "properties": [
+        {
+          "name": "public_previous_version",
+          "value": "1.1.0"
+        },
+        {
+          "name": "public_previous_doi",
+          "value": "10.5281/zenodo.21762634"
+        },
+        {
+          "name": "data_policy",
+          "value": "deterministic synthetic fixtures only; user-supplied observation rows not redistributed"
+        },
+        {
+          "name": "article_included",
+          "value": "false"
+        },
+        {
+          "name": "current_version_doi",
+          "value": "10.5281/zenodo.21801863"
+        },
+        {
+          "name": "research_outputs_dataset_doi",
+          "value": "10.5281/zenodo.21802337"
+        },
+        {
+          "name": "figure_generation_kit",
+          "value": "included"
+        },
+        {
+          "name": "plantuml_version_lock",
+          "value": "1.2026.6"
+        },
+        {
+          "name": "plantuml_jar_bundled",
+          "value": "false"
+        }
+      ]
+    }
   },
   "components": [
     {
@@ -49,9 +95,51 @@
     },
     {
       "type": "library",
-      "name": "setuptools",
-      "version": "82.0.1",
-      "purl": "pkg:pypi/setuptools@82.0.1"
+      "name": "matplotlib",
+      "version": "3.10.8",
+      "purl": "pkg:pypi/matplotlib@3.10.8",
+      "properties": [
+        {
+          "name": "scope",
+          "value": "optional figure-generation toolchain"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pandas",
+      "version": "2.2.3",
+      "purl": "pkg:pypi/pandas@2.2.3",
+      "properties": [
+        {
+          "name": "scope",
+          "value": "optional figure-generation toolchain"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Pillow",
+      "version": "12.2.0",
+      "purl": "pkg:pypi/pillow@12.2.0",
+      "properties": [
+        {
+          "name": "scope",
+          "value": "optional figure-generation toolchain"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "python-pptx",
+      "version": "1.0.2",
+      "purl": "pkg:pypi/python-pptx@1.0.2",
+      "properties": [
+        {
+          "name": "scope",
+          "value": "optional figure-generation toolchain"
+        }
+      ]
     }
   ]
 }

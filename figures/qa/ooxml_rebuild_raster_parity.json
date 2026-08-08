@@ -1,0 +1,87 @@
+{
+  "figures": 10,
+  "pixel_identical_count": 10,
+  "max_mae": 0.0,
+  "rows": [
+    {
+      "figure_id": "F1",
+      "original_size": "680x348",
+      "rebuilt_size": "680x348",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "F2",
+      "original_size": "680x359",
+      "rebuilt_size": "680x359",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "F3",
+      "original_size": "680x370",
+      "rebuilt_size": "680x370",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "F4",
+      "original_size": "595x499",
+      "rebuilt_size": "595x499",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "F5",
+      "original_size": "595x499",
+      "rebuilt_size": "595x499",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "F6",
+      "original_size": "595x499",
+      "rebuilt_size": "595x499",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "F7",
+      "original_size": "595x499",
+      "rebuilt_size": "595x499",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "GA",
+      "original_size": "491x189",
+      "rebuilt_size": "491x189",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "S1",
+      "original_size": "595x499",
+      "rebuilt_size": "595x499",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    },
+    {
+      "figure_id": "S2",
+      "original_size": "595x499",
+      "rebuilt_size": "595x499",
+      "mean_abs_channel_error": 0.0,
+      "max_channel_error": 0,
+      "pixel_identical": true
+    }
+  ]
+}

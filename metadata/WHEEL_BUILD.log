@@ -1,0 +1,5 @@
+Build command: python -m pip wheel . --no-deps --no-build-isolation -w <wheel-directory>
+Result: passed
+Artifact: pcpi_candidate_certification-1.2.0-py3-none-any.whl
+Size bytes: 60901
+SHA-256: 8062649ccbcaac73fbe06ba4553bfac0554557e7360ee886c32035f7c10a4880

@@ -1,0 +1,16 @@
+{
+  "manifests": {
+    "inventory_records": 602,
+    "checksum_records": 602,
+    "verification_source": "raw committed Git blobs via ls-tree and cat-file, with filesystem fallback outside Git",
+    "errors": [],
+    "valid": true
+  },
+  "policy": {
+    "prohibited_paths": [],
+    "unexpected_data_csv": [],
+    "unexpected_figure_data_csv": [],
+    "valid": true
+  },
+  "valid": true
+}

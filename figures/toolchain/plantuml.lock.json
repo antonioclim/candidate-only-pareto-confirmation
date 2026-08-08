@@ -1,0 +1,9 @@
+{
+  "name": "PlantUML",
+  "version": "1.2026.6",
+  "artifact": "plantuml-1.2026.6.jar",
+  "sha256": "89948f14c93756c7a3fb7b69078ff37e8489fd79dd430c582b931e2f65358690",
+  "bundled": false,
+  "purpose": "semantic conceptual-diagram rendering",
+  "note": "Download separately from the official release and verify SHA-256 before use."
+}

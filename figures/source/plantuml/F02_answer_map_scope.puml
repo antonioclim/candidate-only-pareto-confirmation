@@ -1,0 +1,39 @@
+
+    @startuml
+    !include common/pcpi_theme.puml
+    title Figure 2. Candidate-only confirmation and full-set classification solve different answer maps
+    top to bottom direction
+
+    package "Candidate-only confirmation" as leftpane #F7FBFF {
+      rectangle "Frozen archive and selected candidate" as l0 #E8F1FB
+      rectangle "Candidate challenged against archive-relative criterion" as l1 #EEF6EA
+      rectangle "Possible archive members" as l2 #FFFCE6
+      rectangle "a1" as a1 #FFFFFF
+      rectangle "a2" as a2 #FFFFFF
+      rectangle "a3" as a3 #FFFFFF
+      rectangle "Answer map: confirm selected candidate
+or remain undecided" as l3 #FFF7E8
+      l0 --> l1
+      l1 --> l2
+      l2 --> a1
+      l2 --> a2
+      l2 --> a3
+      a1 --> l3
+      a2 --> l3
+      a3 --> l3
+    }
+
+    package "Full-set classification" as rightpane #F7FBFF {
+      rectangle "Entire alternative set" as r0 #E8F1FB
+      rectangle "Global classification task" as r1 #EEF6EA
+      rectangle "Need to resolve all active competitors" as r2 #FFFCE6
+      rectangle "Answer map: identify/classify across the full set" as r3 #FFF7E8
+      r0 --> r1
+      r1 --> r2
+      r2 --> r3
+    }
+
+    note bottom
+    The stopping counts reported for the application compare different answer maps and therefore do not represent a same-problem algorithm ranking.
+    end note
+    @enduml
